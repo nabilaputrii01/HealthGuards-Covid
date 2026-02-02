@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard Covid - Platform Kolaboratif Kesehatan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    <style>
+        :root {
+            --dusty-rose: #D4A798;
+            --mocha-brown: #8B7355;
+            --blush-pink: #E8C4C4;
+            --deep-taupe: #7A6A5F;
+            --cream-base: #FAF3EB;
+            --soft-white: #FFFDFA;
+            --accent-coral: #E9967A;
+            --dark-brown: #5D4C3C;
+            --success-green: #7AA95C;
+            --gradient-primary: linear-gradient(135deg, #D4A798 0%, #8B7355 100%);
+            --gradient-soft: linear-gradient(135deg, #E8C4C4 0%, #FAF3EB 100%);
+            --gradient-hover: linear-gradient(135deg, #E8C4C4 0%, #D4A798 100%);
+            --shadow-soft: 0 8px 32px rgba(212, 167, 152, 0.15);
+            --shadow-medium: 0 12px 40px rgba(139, 115, 85, 0.2);
+            --shadow-strong: 0 20px 60px rgba(139, 115, 85, 0.3);
+            --border-radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--cream-base);
+            color: var(--deep-taupe);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--soft-white);
+            box-shadow: var(--shadow-soft);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 253, 250, 0.95);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.9rem;
+            color: var(--mocha-brown);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.03);
+        }
+
+        .logo-icon {
+            background: var(--gradient-primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--soft-white);
+            font-size: 1.6rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deep-taupe);
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--blush-pink);
+            color: var(--mocha-brown);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: var(--gradient-primary);
+            color: var(--soft-white);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-links a.active:hover {
+            background: var(--gradient-hover);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--soft-white);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-secondary {
+            background-color: var(--soft-white);
+            color: var(--mocha-brown);
+            border: 2px solid var(--dusty-rose);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--blush-pink);
+            transform: translateY(-5px) scale(1.05);
+            border-color: var(--accent-coral);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-success {
+            background-color: var(--success-green);
+            color: var(--soft-white);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 40px rgba(122, 169, 92, 0.3);
+            background-color: #8BC34A;
+        }
+
+        .btn-small {
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+
+        /* Feature Preview Windows */
+        .feature-preview {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(93, 76, 60, 0.95);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .preview-content {
+            background: var(--soft-white);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 1000px;
+            height: 80vh;
+            overflow: hidden;
+            box-shadow: var(--shadow-strong);
+            position: relative;
+            animation: previewAppear 0.5s ease-out;
+        }
+
+        @keyframes previewAppear {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .preview-header {
+            background: var(--gradient-primary);
+            padding: 20px 30px;
+            color: var(--soft-white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .close-preview {
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-preview:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .preview-body {
+            padding: 30px;
+            height: calc(100% - 70px);
+            overflow-y: auto;
+        }
+
+        /* CovidSphere Preview */
+        #covidSpherePreview .preview-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .map-container {
+            flex: 1;
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid var(--blush-pink);
+            min-height: 300px;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 253, 250, 0.95);
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .map-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .map-btn {
+            padding: 10px 20px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .map-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .data-point {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .data-point:hover {
+            transform: translate(-50%, -50%) scale(2);
+            z-index: 10;
+        }
+
+        .hospital-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #2196F3;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            cursor: pointer;
+        }
+
+        .hospital-marker::after {
+            content: '+';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        .data-panel {
+            background: var(--soft-white);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: var(--shadow-soft);
+            border-left: 4px solid var(--dusty-rose);
+        }
+
+        /* AI Chat Preview */
+        #aiPreview .preview-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-container {
+            flex: 1;
+            background: var(--cream-base);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            animation: messageAppear 0.3s ease;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ai-message {
+            background: var(--gradient-soft);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-message {
+            background: var(--gradient-primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid var(--blush-pink);
+            border-radius: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+
+        .chat-input button {
+            padding: 15px 25px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .chat-input button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .quick-questions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--blush-pink) 0%, transparent 70%);
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--blush-pink);
+            color: var(--mocha-brown);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-soft);
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            line-height: 1.1;
+            color: var(--dark-brown);
+            margin-bottom: 25px;
+        }
+
+        .hero-title span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            animation: titleGlow 3s infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(212, 167, 152, 0.5)); }
+            50% { filter: drop-shadow(0 0 15px rgba(212, 167, 152, 0.8)); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--deep-taupe);
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual {
+            width: 100%;
+            height: 450px;
+            background: var(--gradient-soft);
+            border-radius: var(--border-radius);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid rgba(212, 167, 152, 0.2);
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--soft-white);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mocha-brown);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .floating-element:hover {
+            transform: scale(1.2) rotate(10deg);
+            z-index: 10;
+        }
+
+        .floating-1 {
+            width: 90px;
+            height: 90px;
+            top: 15%;
+            left: 10%;
+            background-color: rgba(232, 196, 196, 0.9);
+        }
+
+        .floating-2 {
+            width: 70px;
+            height: 70px;
+            bottom: 25%;
+            right: 15%;
+            background-color: rgba(212, 167, 152, 0.9);
+        }
+
+        .floating-3 {
+            width: 110px;
+            height: 110px;
+            bottom: 10%;
+            left: 20%;
+            background-color: rgba(139, 115, 85, 0.2);
+        }
+
+        .visual-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--soft-white);
+            font-size: 4.5rem;
+            box-shadow: var(--shadow-strong);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .visual-center:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 50px rgba(212, 167, 152, 0.6);
+        }
+
+        /* Features Section - REDESIGNED */
+        .features {
+            padding: 100px 0;
+            background-color: var(--soft-white);
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--dusty-rose), transparent);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--dark-brown);
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 5px;
+            background: var(--gradient-primary);
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .features-container {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            background: var(--soft-white);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            border-left: 6px solid var(--dusty-rose);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-strong);
+            border-left-color: var(--accent-coral);
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(232, 196, 196, 0.05) 100%);
+            z-index: 0;
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-icon-large {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-soft);
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: var(--mocha-brown);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover .feature-icon-large {
+            background: var(--gradient-primary);
+            color: var(--soft-white);
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .feature-title-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--dark-brown);
+            font-weight: 600;
+        }
+
+        .feature-description {
+            font-size: 1.15rem;
+            color: var(--deep-taupe);
+            line-height: 1.8;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-cta {
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+            z-index: 1;
+        }
+
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--blush-pink), transparent);
+            margin: 40px auto;
+            width: 80%;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 100px 0;
+            background: var(--gradient-soft);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+        }
+
+        .stat-card {
+            background: var(--soft-white);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--deep-taupe);
+            font-weight: 500;
+        }
+
+        /* Footer - KEMBALI SEPERTI AWAL */
+        footer {
+            background-color: var(--dark-brown);
+            color: var(--blush-pink);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--soft-white);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-desc {
+            color: var(--blush-pink);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .footer-title {
+            color: var(--soft-white);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--blush-pink);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--dusty-rose);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(232, 196, 196, 0.2);
+            color: var(--blush-pink);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-subtitle {
+                margin: 0 auto 40px;
+            }
+            
+            .hero-title {
+                font-size: 3.2rem;
+            }
+            
+            .hero-visual {
+                height: 400px;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-visual {
+                height: 350px;
+            }
+            
+            .visual-center {
+                width: 180px;
+                height: 180px;
+                font-size: 3.5rem;
+            }
+            
+            .btn {
+                padding: 12px 28px;
+            }
+            
+            .feature-item {
+                padding: 30px;
+            }
+            
+            .feature-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .feature-title-main {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-1 { animation-delay: 0s; }
+        .floating-2 { animation-delay: 2s; }
+        .floating-3 { animation-delay: 4s; }
+
+        .visual-center {
+            animation: pulse 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🛡️</div>
+                HealthGuard Covid
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+                <li><a href="#features"><i class="fas fa-star"></i> Fitur Inovatif</a></li>
+                <li><a href="#stats"><i class="fas fa-chart-bar"></i> Data Real-time</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Kontak</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="btn btn-primary" id="startCollaboratingBtn">
+                    <i class="fas fa-users"></i> Mulai Berkolaborasi
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - TEKS DIUBAH -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <i class="fas fa-shield-alt"></i> Platform Kolaborasi Kesehatan Terdepan
+                </div>
+                <h1 class="hero-title">
+                    Bersama Lawan Pandemi dengan <span>HealthGuard Covid</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Website informasi kesehatan COVID-19 dengan sentuhan teknologi terkini untuk kolaborasi, akses universal, dan data real-time. Kami menyatukan tenaga kesehatan, peneliti, dan masyarakat dalam satu platform yang elegan dan powerful.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" id="exploreFeaturesBtn">
+                        <i class="fas fa-rocket"></i> Jelajahi Fitur
+                    </button>
+                    <button class="btn btn-success" id="joinNowBtn">
+                        <i class="fas fa-user-plus"></i> Bergabung Sekarang
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <div class="hero-visual">
+                    <div class="floating-element floating-1" id="floatingStats">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="floating-element floating-2" id="floatingAi">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="floating-element floating-3" id="floatingCollaboration">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="visual-center" id="mainVisual">
+                        <i class="fas fa-shield-virus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Fitur Inovatif Kami</h2>
+            <div class="features-container">
+                <!-- Feature 1: CovidSphere -->
+                <div class="feature-item">
+                    <div class="feature-header">
+                        <div class="feature-icon-large">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3 class="feature-title-main">CovidSphere 3D</h3>
+                    </div>
+                    <p class="feature-description">
+                        Peta kolaborasi 3D real-time dengan visualisasi partikel penyebaran COVID-19 yang dapat diupdate bersama oleh ahli kesehatan. Pantau perkembangan kasus secara visual dan berkolaborasi dalam analisis data.
+                    </p>
+                    <div class="feature-cta">
+                        <button class="btn btn-primary" id="openCovidSphereBtn">
+                            <i class="fas fa-external-link-alt"></i> Buka CovidSphere
+                        </button>
+                    </div>
+                </div>
+
+                <div class="separator"></div>
+
+                <!-- Feature 2: Symphony AI -->
+                <div class="feature-item">
+                    <div class="feature-header">
+                        <div class="feature-icon-large">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="feature-title-main">Symphony AI Assistant</h3>
+                    </div>
+                    <p class="feature-description">
+                        Asisten kolaboratif cerdas yang menghubungkan Anda dengan dokter, peneliti, dan sumber terpercaya secara real-time. Dapatkan informasi terkini dan jawaban atas pertanyaan seputar COVID-19.
+                    </p>
+                    <div class="feature-cta">
+                        <button class="btn btn-primary" id="openAiAssistantBtn">
+                            <i class="fas fa-comments"></i> Tanya AI Assistant
+                        </button>
+                    </div>
+                </div>
+
+                <div class="separator"></div>
+
+                <!-- Feature 3: Ubiquitous Access -->
+                <div class="feature-item">
+                    <div class="feature-header">
+                        <div class="feature-icon-large">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="feature-title-main">Akses Ubiquitous</h3>
+                    </div>
+                    <p class="feature-description">
+                        Akses informasi melalui berbagai perangkat: smartphone, tablet, smartwatch, bahkan asisten virtual seperti Alexa. HealthGuard tersedia di mana saja, kapan saja.
+                    </p>
+                    <div class="feature-cta">
+                        <button class="btn btn-primary" id="openUbiquitousBtn">
+                            <i class="fas fa-plug"></i> Coba Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats">
+        <div class="container">
+            <h2 class="section-title">Data Kolaboratif Real-time</h2>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number" id="expertCount">2,847</div>
+                    <div class="stat-label">Ahli Kesehatan Terhubung</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number" id="researchCount">156K</div>
+                    <div class="stat-label">Data Penelitian</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number" id="collaborationCount">89.2K</div>
+                    <div class="stat-label">Sesi Kolaborasi</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number" id="predictionRate">99.7%</div>
+                    <div class="stat-label">Akurasi Prediksi</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn btn-secondary" id="liveDataBtn">
+                    <i class="fas fa-satellite-dish"></i> Lihat Data Live Streaming
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="features" style="background-color: var(--cream-base);">
+        <div class="container">
+            <h2 class="section-title">Siap Berkolaborasi?</h2>
+            <div style="text-align: center; max-width: 700px; margin: 0 auto 50px;">
+                <p style="font-size: 1.2rem; color: var(--deep-taupe);">
+                    Bergabunglah dengan revolusi kolaborasi kesehatan digital. Bersama, kita bisa menciptakan solusi yang lebih cepat, lebih akurat, dan lebih manusiawi.
+                </p>
+            </div>
+            <div style="text-align: center;">
+                <button class="btn btn-primary" id="finalJoinBtn" style="padding: 20px 50px; font-size: 1.2rem;">
+                    <i class="fas fa-handshake"></i> Bergabung dengan HealthGuard
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - KEMBALI SEPERTI AWAL -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">
+                        <div style="background: var(--gradient-primary); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">🛡️</div>
+                        HealthGuard Covid
+                    </div>
+                    <p class="footer-desc">
+                        Platform kolaboratif informasi kesehatan COVID-19 yang mengintegrasikan teknologi Grupware, CSCW, dan Ubiquitous Computing untuk penanganan pandemi yang lebih efektif.
+                    </p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" style="color: var(--blush-pink); font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: var(--blush-pink); font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: var(--blush-pink); font-size: 1.2rem;"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="color: var(--blush-pink); font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Teknologi</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Grupware Kolaboratif</a></li>
+                        <li><a href="#">CSCW (Computer-Supported Cooperative Work)</a></li>
+                        <li><a href="#">Ubiquitous Computing</a></li>
+                        <li><a href="#">AI & Machine Learning</a></li>
+                        <li><a href="#">Real-time Data Visualization</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Fitur Unggulan</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">CovidSphere 3D</a></li>
+                        <li><a href="#">Symphony AI Assistant</a></li>
+                        <li><a href="#">Kolaborasi Real-time</a></li>
+                        <li><a href="#">Akses Multi-Device</a></li>
+                        <li><a href="#">Forum Pakar</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">Kontak</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope" style="margin-right: 8px;"></i> info@healthguardcovid.id</li>
+                        <li><i class="fas fa-phone" style="margin-right: 8px;"></i> +62 21 1234 5678</li>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 HealthGuard Covid. All rights reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent-coral);"></i> for better healthcare collaboration
+            </div>
+        </div>
+    </footer>
+
+    <!-- FEATURE PREVIEW WINDOWS -->
+
+    <!-- CovidSphere 3D Preview -->
+    <div class="feature-preview" id="covidSpherePreview">
+        <div class="preview-content">
+            <div class="preview-header">
+                <div class="preview-title">
+                    <i class="fas fa-globe-americas"></i> CovidSphere 3D - Live Global Map
+                </div>
+                <div class="close-preview" id="closeCovidSphere">&times;</div>
+            </div>
+            <div class="preview-body">
+                <h3 style="color: var(--dark-brown); margin-bottom: 15px;">🌍 Peta Kolaborasi Global Real-time</h3>
+                <p style="margin-bottom: 20px; color: var(--deep-taupe);">
+                    Visualisasi partikel penyebaran COVID-19 di seluruh dunia. Data disimpan di localStorage browser Anda.
+                </p>
+                
+                <div class="map-container" id="mapContainer">
+                    <!-- Data points and hospitals will be added here by JavaScript -->
+                    <div class="map-overlay" id="mapInitialOverlay">
+                        <h3 style="color: var(--dark-brown);">Loading CovidSphere 3D...</h3>
+                        <p>Memuat data dari localStorage dan server</p>
+                        <div class="map-controls">
+                            <button class="map-btn" id="loadMapBtn">
+                                <i class="fas fa-play"></i> Muat Peta Interaktif
+                            </button>
+                            <button class="map-btn" style="background: var(--accent-coral);" id="clearDataBtn">
+                                <i class="fas fa-trash"></i> Clear Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-panel" id="dataInfoPanel" style="display: none;">
+                    <h4 style="color: var(--dark-brown); margin-bottom: 10px;">📊 Data CovidSphere</h4>
+                    <p id="dataStats">Total Data Points: 0 | Rumah Sakit: 0</p>
+                    <p id="southeastAsiaInfo" style="margin-top: 10px;"></p>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button class="btn btn-small btn-primary" id="addDataPointBtn">
+                        <i class="fas fa-plus"></i> Tambah Data Point
+                    </button>
+                    <button class="btn btn-small btn-secondary" id="viewAsiaBtn">
+                        <i class="fas fa-flag"></i> Fokus Asia Tenggara
+                    </button>
+                    <button class="btn btn-small btn-secondary" id="viewHospitalsBtn">
+                        <i class="fas fa-hospital"></i> Tampilkan Rumah Sakit
+                    </button>
+                    <button class="btn btn-small btn-secondary" id="simulateLiveBtn">
+                        <i class="fas fa-broadcast-tower"></i> Simulasi Live Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Preview -->
+    <div class="feature-preview" id="aiPreview">
+        <div class="preview-content">
+            <div class="preview-header">
+                <div class="preview-title">
+                    <i class="fas fa-robot"></i> Symphony AI Assistant
+                </div>
+                <div class="close-preview" id="closeAi">&times;</div>
+            </div>
+            <div class="preview-body">
+                <h3 style="color: var(--dark-brown); margin-bottom: 15px;">💬 Chat dengan Symphony AI</h3>
+                <p style="margin-bottom: 20px; color: var(--deep-taupe);">
+                    Asisten cerdas yang bisa menjawab berbagai pertanyaan seputar HealthGuard, COVID-19, dan kesehatan.
+                </p>
+                
+                <div class="chat-container" id="chatContainer">
+                    <div class="chat-message ai-message">
+                        <strong>Symphony AI:</strong> Halo! 👋 Saya Symphony AI, asisten virtual HealthGuard. Saya siap membantu Anda dengan informasi tentang COVID-19, fitur HealthGuard, atau hal lain yang ingin Anda ketahui. Ada yang bisa saya bantu?
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Tanyakan tentang HealthGuard, COVID-19, atau kesehatan...">
+                    <button id="sendChatBtn">
+                        <i class="fas fa-paper-plane"></i> Kirim
+                    </button>
+                </div>
+                
+                <div class="quick-questions">
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Halo">
+                        <i class="fas fa-hand"></i> Halo AI
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Apa itu HealthGuard?">
+                        <i class="fas fa-info-circle"></i> Tentang HealthGuard
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Bagaimana cara menggunakan CovidSphere?">
+                        <i class="fas fa-globe"></i> Cara Pakai CovidSphere
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Apa saja fitur HealthGuard?">
+                        <i class="fas fa-star"></i> Fitur HealthGuard
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Bagaimana cara bergabung?">
+                        <i class="fas fa-user-plus"></i> Cara Bergabung
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Data COVID-19 terbaru">
+                        <i class="fas fa-chart-line"></i> Data Terbaru
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Tips pencegahan COVID-19">
+                        <i class="fas fa-shield-alt"></i> Tips Pencegahan
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Vaksinasi COVID-19">
+                        <i class="fas fa-syringe"></i> Info Vaksinasi
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Kontak HealthGuard">
+                        <i class="fas fa-phone"></i> Kontak Kami
+                    </button>
+                    <button class="btn btn-small btn-secondary quick-question" data-question="Apa itu CSCW?">
+                        <i class="fas fa-laptop-code"></i> Apa itu CSCW?
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== LOCALSTORAGE MANAGEMENT ====================
+        class DataStorage {
+            constructor() {
+                this.STORAGE_KEY = 'healthguard_covidsphere_data';
+                this.HOSPITALS_KEY = 'healthguard_hospitals_data';
+                this.initData();
+            }
+            
+            initData() {
+                if (!localStorage.getItem(this.STORAGE_KEY)) {
+                    const initialData = {
+                        dataPoints: [],
+                        lastUpdate: new Date().toISOString(),
+                        totalPoints: 0
+                    };
+                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(initialData));
+                }
+                
+                if (!localStorage.getItem(this.HOSPITALS_KEY)) {
+                    const initialHospitals = [
+                        { name: "RSUP Dr. Cipto Mangunkusumo", city: "Jakarta", country: "Indonesia", lat: -6.190, lng: 106.850, beds: 1500 },
+                        { name: "RSUD Dr. Soetomo", city: "Surabaya", country: "Indonesia", lat: -7.265, lng: 112.757, beds: 1200 },
+                        { name: "Singapore General Hospital", city: "Singapore", country: "Singapore", lat: 1.279, lng: 103.834, beds: 1800 },
+                        { name: "Kuala Lumpur Hospital", city: "Kuala Lumpur", country: "Malaysia", lat: 3.139, lng: 101.687, beds: 2300 },
+                        { name: "Bangkok Hospital", city: "Bangkok", country: "Thailand", lat: 13.756, lng: 100.502, beds: 1600 },
+                        { name: "Philippine General Hospital", city: "Manila", country: "Philippines", lat: 14.599, lng: 120.984, beds: 1400 },
+                        { name: "Cho Ray Hospital", city: "Ho Chi Minh", country: "Vietnam", lat: 10.763, lng: 106.660, beds: 1900 },
+                        { name: "RSUP Sanglah", city: "Denpasar", country: "Indonesia", lat: -8.670, lng: 115.213, beds: 900 },
+                        { name: "RSUP Dr. Sardjito", city: "Yogyakarta", country: "Indonesia", lat: -7.783, lng: 110.383, beds: 1100 },
+                        { name: "RSUP Dr. Hasan Sadikin", city: "Bandung", country: "Indonesia", lat: -6.892, lng: 107.610, beds: 1300 }
+                    ];
+                    localStorage.setItem(this.HOSPITALS_KEY, JSON.stringify(initialHospitals));
+                }
+            }
+            
+            getDataPoints() {
+                const data = JSON.parse(localStorage.getItem(this.STORAGE_KEY));
+                return data.dataPoints;
+            }
+            
+            addDataPoint(point) {
+                const data = JSON.parse(localStorage.getItem(this.STORAGE_KEY));
+                point.id = Date.now();
+                point.timestamp = new Date().toISOString();
+                data.dataPoints.push(point);
+                data.totalPoints = data.dataPoints.length;
+                data.lastUpdate = new Date().toISOString();
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+                return point;
+            }
+            
+            clearData() {
+                const initialData = {
+                    dataPoints: [],
+                    lastUpdate: new Date().toISOString(),
+                    totalPoints: 0
+                };
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(initialData));
+                return initialData;
+            }
+            
+            getHospitals() {
+                return JSON.parse(localStorage.getItem(this.HOSPITALS_KEY));
+            }
+            
+            getStats() {
+                const data = JSON.parse(localStorage.getItem(this.STORAGE_KEY));
+                const hospitals = JSON.parse(localStorage.getItem(this.HOSPITALS_KEY));
+                
+                // Calculate Southeast Asia stats
+                const southeastAsiaCountries = ['Indonesia', 'Singapore', 'Malaysia', 'Thailand', 'Philippines', 'Vietnam', 'Brunei', 'Cambodia', 'Laos', 'Myanmar', 'Timor-Leste'];
+                const seaDataPoints = data.dataPoints.filter(point => 
+                    southeastAsiaCountries.includes(point.country)
+                );
+                const seaHospitals = hospitals.filter(hospital => 
+                    southeastAsiaCountries.includes(hospital.country)
+                );
+                
+                return {
+                    totalPoints: data.totalPoints,
+                    totalHospitals: hospitals.length,
+                    seaPoints: seaDataPoints.length,
+                    seaHospitals: seaHospitals.length,
+                    lastUpdate: data.lastUpdate
+                };
+            }
+            
+            simulateLiveData() {
+                const cities = [
+                    { city: "Jakarta", country: "Indonesia", lat: -6.2088, lng: 106.8456 },
+                    { city: "Surabaya", country: "Indonesia", lat: -7.2575, lng: 112.7521 },
+                    { city: "Singapore", country: "Singapore", lat: 1.3521, lng: 103.8198 },
+                    { city: "Kuala Lumpur", country: "Malaysia", lat: 3.1390, lng: 101.6869 },
+                    { city: "Bangkok", country: "Thailand", lat: 13.7563, lng: 100.5018 },
+                    { city: "Manila", country: "Philippines", lat: 14.5995, lng: 120.9842 },
+                    { city: "Ho Chi Minh", country: "Vietnam", lat: 10.8231, lng: 106.6297 }
+                ];
+                
+                const randomCity = cities[Math.floor(Math.random() * cities.length)];
+                const cases = Math.floor(Math.random() * 500) + 50;
+                const severity = Math.random() > 0.7 ? 'high' : Math.random() > 0.4 ? 'medium' : 'low';
+                
+                const newPoint = {
+                    city: randomCity.city,
+                    country: randomCity.country,
+                    lat: randomCity.lat + (Math.random() - 0.5) * 0.5,
+                    lng: randomCity.lng + (Math.random() - 0.5) * 0.5,
+                    cases: cases,
+                    severity: severity
+                };
+                
+                return this.addDataPoint(newPoint);
+            }
+        }
+
+        // ==================== AI RESPONSE SYSTEM ====================
+        class AIAssistant {
+            constructor() {
+                this.responses = {
+                    // Greetings
+                    'greeting': [
+                        "Halo! 👋 Senang bertemu dengan Anda! Saya Symphony AI, asisten virtual HealthGuard. Ada yang bisa saya bantu hari ini?",
+                        "Halo! 😊 Selamat datang di HealthGuard. Saya Symphony AI siap membantu Anda dengan informasi kesehatan dan COVID-19.",
+                        "Halo! Salam sehat! Saya Symphony AI, partner kolaborasi Anda di HealthGuard. Bagaimana kabar Anda hari ini?"
+                    ],
+                    
+                    // About HealthGuard
+                    'about_healthguard': [
+                        "HealthGuard adalah platform kolaborasi kesehatan COVID-19 yang mengintegrasikan teknologi terkini seperti Grupware, CSCW, dan Ubiquitous Computing. Kami menyatukan tenaga kesehatan, peneliti, dan masyarakat dalam satu platform.",
+                        "HealthGuard adalah website informasi kesehatan COVID-19 dengan fitur inovatif seperti CovidSphere 3D, Symphony AI Assistant, dan akses ubiquitous melalui berbagai perangkat.",
+                        "HealthGuard adalah revolusi kolaborasi kesehatan digital yang membantu memerangi pandemi melalui teknologi kolaborasi real-time dan kecerdasan buatan."
+                    ],
+                    
+                    // Features
+                    'features': [
+                        "HealthGuard memiliki 3 fitur utama: 1) CovidSphere 3D - Peta kolaborasi real-time, 2) Symphony AI - Asisten cerdas, 3) Akses Ubiquitous - Tersedia di semua perangkat.",
+                        "Fitur unggulan kami: CovidSphere untuk visualisasi data, Symphony AI untuk bantuan informasi, dan akses ubiquitous untuk kemudahan penggunaan di berbagai device.",
+                        "Kami punya CovidSphere (peta 3D), Symphony AI (chatbot cerdas), dan sistem akses universal yang bisa dipakai di HP, tablet, smartwatch, bahkan asisten virtual."
+                    ],
+                    
+                    // How to use
+                    'how_to_use': [
+                        "Cara menggunakan HealthGuard sangat mudah: 1) Daftar akun gratis, 2) Jelajahi fitur-fitur, 3) Mulai berkolaborasi dengan ahli kesehatan lainnya.",
+                        "Anda bisa mulai dengan mendaftar, lalu mencoba CovidSphere untuk melihat data, atau chat dengan saya untuk informasi lebih lanjut.",
+                        "Pertama, daftar di website. Kemudian Anda bisa akses semua fitur termasuk CovidSphere 3D dan chat dengan saya kapan saja."
+                    ],
+                    
+                    // COVID Data
+                    'covid_data': [
+                        "Data COVID-19 terus diperbarui secara real-time di HealthGuard. Anda bisa melihat perkembangan kasus di CovidSphere 3D dengan visualisasi interaktif.",
+                        "Informasi terbaru COVID-19 tersedia di dashboard kami. Kasus aktif, vaksinasi, dan penelitian terbaru bisa diakses melalui berbagai fitur.",
+                        "HealthGuard mengumpulkan data dari berbagai sumber terpercaya. Untuk data real-time, coba buka CovidSphere 3D di fitur utama kami."
+                    ],
+                    
+                    // Prevention Tips
+                    'prevention_tips': [
+                        "Tips pencegahan COVID-19: 1) Pakai masker di keramaian, 2) Cuci tangan rutin, 3) Jaga jarak, 4) Vaksinasi lengkap, 5) Isolasi jika bergejala.",
+                        "Lindungi diri dengan 5M: Memakai masker, Mencuci tangan, Menjaga jarak, Menjauhi kerumunan, dan Membatasi mobilitas.",
+                        "Selalu pakai masker yang tepat, cuci tangan dengan sabun, hindari kerumunan, dan lengkapi vaksinasi Anda. Kesehatan dimulai dari diri sendiri!"
+                    ],
+                    
+                    // Vaccination
+                    'vaccination': [
+                        "Vaksinasi COVID-19 sangat penting untuk membentuk kekebalan komunitas. Pastikan Anda mendapatkan vaksin lengkap termasuk booster.",
+                        "Info vaksinasi: Efektivitas vaksin tinggi terhadap gejala berat. Dosis booster direkomendasikan 3-6 bulan setelah vaksinasi lengkap.",
+                        "Vaksin tersedia gratis di puskesmas dan rumah sakit. Bawa KTP dan kartu vaksin sebelumnya untuk dosis berikutnya."
+                    ],
+                    
+                    // Contact
+                    'contact': [
+                        "Kontak HealthGuard: Email: info@healthguardcovid.id, Telp: +62 21 1234 5678, Alamat: Jakarta, Indonesia.",
+                        "Hubungi kami via email di info@healthguardcovid.id atau telepon +62 21 1234 5678. Tim kami siap membantu.",
+                        "Untuk pertanyaan lebih lanjut, email ke info@healthguardcovid.id atau kunjungi kantor kami di Jakarta."
+                    ],
+                    
+                    // CSCW Explanation
+                    'cscw': [
+                        "CSCW (Computer-Supported Cooperative Work) adalah studi tentang bagaimana orang bekerja sama menggunakan teknologi. Di HealthGuard, kami menerapkan CSCW untuk kolaborasi kesehatan.",
+                        "CSCW adalah teknologi yang mendukung kerja sama tim melalui komputer. HealthGuard menggunakan CSCW untuk memungkinkan kolaborasi antara dokter, peneliti, dan masyarakat.",
+                        "Computer-Supported Cooperative Work (CSCW) membantu tim bekerja bersama secara digital. HealthGuard menggunakannya untuk kolaborasi data kesehatan real-time."
+                    ],
+                    
+                    // Join Process
+                    'join': [
+                        "Cara bergabung: 1) Klik tombol 'Bergabung Sekarang', 2) Isi formulir pendaftaran, 3) Verifikasi email, 4) Mulai berkolaborasi!",
+                        "Bergabung dengan HealthGuard gratis! Cukup daftar dengan email Anda, lalu akses semua fitur kolaborasi kami.",
+                        "Untuk bergabung, klik tombol bergabung di website, isi data diri, dan Anda akan menjadi bagian dari komunitas kesehatan digital kami."
+                    ],
+                    
+                    // Default response
+                    'default': [
+                        "Maaf, saya belum sepenuhnya memahami pertanyaan Anda. Bisa tolong diperjelas? Saya bisa membantu dengan informasi tentang HealthGuard, COVID-19, atau kesehatan umum.",
+                        "Saya masih belajar memahami semua pertanyaan. Coba tanyakan tentang fitur HealthGuard, informasi COVID-19, atau tips kesehatan.",
+                        "Pertanyaan menarik! Saat ini saya fokus membantu dengan informasi HealthGuard dan COVID-19. Ada hal spesifik yang ingin Anda ketahui?"
+                    ]
+                };
+            }
+            
+            getResponse(userMessage) {
+                const lowerMsg = userMessage.toLowerCase().trim();
+                
+                // Check for specific patterns
+                if (this.isGreeting(lowerMsg)) return this.getRandomResponse('greeting');
+                if (this.isAboutHealthGuard(lowerMsg)) return this.getRandomResponse('about_healthguard');
+                if (this.isFeaturesQuestion(lowerMsg)) return this.getRandomResponse('features');
+                if (this.isHowToUse(lowerMsg)) return this.getRandomResponse('how_to_use');
+                if (this.isCovidData(lowerMsg)) return this.getRandomResponse('covid_data');
+                if (this.isPreventionTips(lowerMsg)) return this.getRandomResponse('prevention_tips');
+                if (this.isVaccination(lowerMsg)) return this.getRandomResponse('vaccination');
+                if (this.isContact(lowerMsg)) return this.getRandomResponse('contact');
+                if (this.isCSCW(lowerMsg)) return this.getRandomResponse('cscw');
+                if (this.isJoin(lowerMsg)) return this.getRandomResponse('join');
+                
+                // Check for keywords
+                const keywords = {
+                    'healthguard': 'about_healthguard',
+                    'covidsphere': 'features',
+                    'symphony': 'features',
+                    'ai': 'features',
+                    'fitur': 'features',
+                    'cara pakai': 'how_to_use',
+                    'data': 'covid_data',
+                    'kasus': 'covid_data',
+                    'pencegahan': 'prevention_tips',
+                    'masker': 'prevention_tips',
+                    'vaksin': 'vaccination',
+                    'kontak': 'contact',
+                    'cscw': 'cscw',
+                    'grupware': 'cscw',
+                    'ubiquitous': 'features',
+                    'bergabung': 'join',
+                    'daftar': 'join'
+                };
+                
+                for (const [keyword, responseType] of Object.entries(keywords)) {
+                    if (lowerMsg.includes(keyword)) {
+                        return this.getRandomResponse(responseType);
+                    }
+                }
+                
+                return this.getRandomResponse('default');
+            }
+            
+            isGreeting(message) {
+                const greetings = ['halo', 'hai', 'hi', 'hello', 'selamat', 'pagi', 'siang', 'sore', 'malam'];
+                return greetings.some(greet => message.includes(greet));
+            }
+            
+            isAboutHealthGuard(message) {
+                return message.includes('healthguard') || message.includes('tentang') || message.includes('apa itu');
+            }
+            
+            isFeaturesQuestion(message) {
+                return message.includes('fitur') || message.includes('symphony') || message.includes('covidsphere');
+            }
+            
+            isHowToUse(message) {
+                return message.includes('cara') && (message.includes('pakai') || message.includes('gunakan'));
+            }
+            
+            isCovidData(message) {
+                return message.includes('data') || message.includes('kasus') || message.includes('statistik');
+            }
+            
+            isPreventionTips(message) {
+                return message.includes('pencegahan') || message.includes('cegah') || message.includes('tips') || message.includes('masker');
+            }
+            
+            isVaccination(message) {
+                return message.includes('vaksin') || message.includes('suntik') || message.includes('booster');
+            }
+            
+            isContact(message) {
+                return message.includes('kontak') || message.includes('hubungi') || message.includes('email') || message.includes('telpon');
+            }
+            
+            isCSCW(message) {
+                return message.includes('cscw') || message.includes('grupware') || message.includes('kolaborasi');
+            }
+            
+            isJoin(message) {
+                return message.includes('bergabung') || message.includes('daftar') || message.includes('registrasi');
+            }
+            
+            getRandomResponse(type) {
+                const responses = this.responses[type] || this.responses['default'];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+        }
+
+        // ==================== MAIN APPLICATION ====================
+        class HealthGuardApp {
+            constructor() {
+                this.dataStorage = new DataStorage();
+                this.aiAssistant = new AIAssistant();
+                this.mapInitialized = false;
+                this.hospitalsVisible = false;
+                this.southeastAsiaView = false;
+                this.liveDataInterval = null;
+                this.init();
+            }
+            
+            init() {
+                this.initEventListeners();
+                this.initCounters();
+                this.initChat();
+            }
+            
+            initEventListeners() {
+                // Navigation
+                document.getElementById('startCollaboratingBtn').addEventListener('click', () => {
+                    document.querySelector('#features').scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                document.getElementById('exploreFeaturesBtn').addEventListener('click', () => {
+                    document.querySelector('#features').scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                document.getElementById('joinNowBtn').addEventListener('click', () => {
+                    this.openAiChat();
+                });
+                
+                document.getElementById('liveDataBtn').addEventListener('click', () => {
+                    this.openPreview('covidSpherePreview');
+                });
+                
+                document.getElementById('finalJoinBtn').addEventListener('click', () => {
+                    this.openAiChat();
+                });
+                
+                // Feature previews
+                document.getElementById('openCovidSphereBtn').addEventListener('click', () => {
+                    this.openPreview('covidSpherePreview');
+                });
+                
+                document.getElementById('openAiAssistantBtn').addEventListener('click', () => {
+                    this.openAiChat();
+                });
+                
+                // Close previews
+                document.getElementById('closeCovidSphere').addEventListener('click', () => {
+                    this.closePreview('covidSpherePreview');
+                });
+                
+                document.getElementById('closeAi').addEventListener('click', () => {
+                    this.closePreview('aiPreview');
+                });
+                
+                // CovidSphere controls
+                document.getElementById('loadMapBtn').addEventListener('click', () => {
+                    this.loadCovidSphereMap();
+                });
+                
+                document.getElementById('clearDataBtn').addEventListener('click', () => {
+                    this.clearCovidSphereData();
+                });
+                
+                document.getElementById('addDataPointBtn').addEventListener('click', () => {
+                    this.showAddDataPointModal();
+                });
+                
+                document.getElementById('viewAsiaBtn').addEventListener('click', () => {
+                    this.focusSoutheastAsia();
+                });
+                
+                document.getElementById('viewHospitalsBtn').addEventListener('click', () => {
+                    this.toggleHospitals();
+                });
+                
+                document.getElementById('simulateLiveBtn').addEventListener('click', () => {
+                    this.startLiveDataSimulation();
+                });
+                
+                // Floating elements
+                document.getElementById('floatingStats').addEventListener('click', () => {
+                    document.querySelector('#stats').scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                document.getElementById('floatingAi').addEventListener('click', () => {
+                    this.openAiChat();
+                });
+                
+                document.getElementById('floatingCollaboration').addEventListener('click', () => {
+                    document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                document.getElementById('mainVisual').addEventListener('click', () => {
+                    this.openPreview('covidSpherePreview');
+                });
+                
+                // Smooth scrolling for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        if(targetId === '#') return;
+                        const targetElement = document.querySelector(targetId);
+                        if(targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+            }
+            
+            initCounters() {
+                setTimeout(() => {
+                    this.animateCounter('expertCount', 2847);
+                    this.animateCounter('researchCount', 156000);
+                    this.animateCounter('collaborationCount', 89200);
+                    document.getElementById('predictionRate').textContent = '99.7%';
+                }, 500);
+            }
+            
+            animateCounter(elementId, targetValue, duration = 2000) {
+                const element = document.getElementById(elementId);
+                const startValue = 0;
+                const increment = targetValue / (duration / 16);
+                
+                let currentValue = startValue;
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= targetValue) {
+                        element.textContent = targetValue.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(currentValue).toLocaleString();
+                    }
+                }, 16);
+            }
+            
+            openPreview(previewId) {
+                document.getElementById(previewId).style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                if (previewId === 'covidSpherePreview') {
+                    this.updateCovidSphereStats();
+                }
+            }
+            
+            closePreview(previewId) {
+                document.getElementById(previewId).style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                if (previewId === 'covidSpherePreview') {
+                    this.stopLiveDataSimulation();
+                }
+            }
+            
+            openAiChat() {
+                this.openPreview('aiPreview');
+                // Auto-scroll to bottom of chat
+                setTimeout(() => {
+                    const chatContainer = document.getElementById('chatContainer');
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 100);
+            }
+            
+            // ==================== COVIDSPHERE FUNCTIONS ====================
+            loadCovidSphereMap() {
+                const mapContainer = document.getElementById('mapContainer');
+                const overlay = document.getElementById('mapInitialOverlay');
+                
+                overlay.style.display = 'none';
+                mapContainer.style.background = 'linear-gradient(135deg, #e8f4f8, #d4e7fa)';
+                
+                // Add data points from localStorage
+                const dataPoints = this.dataStorage.getDataPoints();
+                dataPoints.forEach(point => {
+                    this.addDataPointToMap(point);
+                });
+                
+                // Show hospitals
+                this.showHospitalsOnMap();
+                
+                // Update stats panel
+                this.updateCovidSphereStats();
+                document.getElementById('dataInfoPanel').style.display = 'block';
+                
+                // Show success message
+                this.showMapNotification('Peta CovidSphere berhasil dimuat!', 'success');
+            }
+            
+            addDataPointToMap(point) {
+                const mapContainer = document.getElementById('mapContainer');
+                
+                // Convert lat/lng to pixel positions (simplified)
+                const x = 50 + (point.lng * 3);
+                const y = 50 - (point.lat * 3);
+                
+                const dataPoint = document.createElement('div');
+                dataPoint.className = 'data-point';
+                dataPoint.style.cssText = `
+                    position: absolute;
+                    left: ${x}%;
+                    top: ${y}%;
+                    width: ${point.severity === 'high' ? '20px' : point.severity === 'medium' ? '15px' : '10px'};
+                    height: ${point.severity === 'high' ? '20px' : point.severity === 'medium' ? '15px' : '10px'};
+                    background-color: ${point.severity === 'high' ? '#f44336' : point.severity === 'medium' ? '#ff9800' : '#4caf50'};
+                    border-radius: 50%;
+                    cursor: pointer;
+                    transform: translate(-50%, -50%);
+                    transition: all 0.3s ease;
+                `;
+                
+                dataPoint.title = `${point.city}, ${point.country}: ${point.cases} kasus`;
+                
+                dataPoint.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translate(-50%, -50%) scale(2)';
+                    this.style.zIndex = '10';
+                });
+                
+                dataPoint.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translate(-50%, -50%) scale(1)';
+                    this.style.zIndex = '1';
+                });
+                
+                mapContainer.appendChild(dataPoint);
+            }
+            
+            showHospitalsOnMap() {
+                const hospitals = this.dataStorage.getHospitals();
+                const mapContainer = document.getElementById('mapContainer');
+                
+                hospitals.forEach(hospital => {
+                    const x = 50 + (hospital.lng * 3);
+                    const y = 50 - (hospital.lat * 3);
+                    
+                    const marker = document.createElement('div');
+                    marker.className = 'hospital-marker';
+                    marker.style.cssText = `
+                        position: absolute;
+                        left: ${x}%;
+                        top: ${y}%;
+                        width: 20px;
+                        height: 20px;
+                        background: #2196F3;
+                        border-radius: 50% 50% 50% 0;
+                        transform: rotate(-45deg) translate(-50%, -50%);
+                        cursor: pointer;
+                    `;
+                    
+                    marker.title = `${hospital.name}, ${hospital.city}: ${hospital.beds} tempat tidur`;
+                    
+                    marker.addEventListener('mouseenter', function() {
+                        this.style.transform = 'rotate(-45deg) translate(-50%, -50%) scale(1.5)';
+                        this.style.zIndex = '10';
+                    });
+                    
+                    marker.addEventListener('mouseleave', function() {
+                        this.style.transform = 'rotate(-45deg) translate(-50%, -50%) scale(1)';
+                        this.style.zIndex = '1';
+                    });
+                    
+                    mapContainer.appendChild(marker);
+                });
+                
+                this.hospitalsVisible = true;
+            }
+            
+            updateCovidSphereStats() {
+                const stats = this.dataStorage.getStats();
+                document.getElementById('dataStats').textContent = 
+                    `Total Data Points: ${stats.totalPoints} | Rumah Sakit: ${stats.totalHospitals}`;
+                
+                document.getElementById('southeastAsiaInfo').innerHTML = 
+                    `<strong>Asia Tenggara:</strong> ${stats.seaPoints} data points | ${stats.seaHospitals} rumah sakit`;
+            }
+            
+            clearCovidSphereData() {
+                if (confirm('Apakah Anda yakin ingin menghapus semua data CovidSphere?')) {
+                    this.dataStorage.clearData();
+                    
+                    // Clear map visualization
+                    const mapContainer = document.getElementById('mapContainer');
+                    const dataPoints = mapContainer.querySelectorAll('.data-point');
+                    dataPoints.forEach(point => point.remove());
+                    
+                    // Reload hospitals
+                    const hospitals = mapContainer.querySelectorAll('.hospital-marker');
+                    hospitals.forEach(hospital => hospital.remove());
+                    this.showHospitalsOnMap();
+                    
+                    this.updateCovidSphereStats();
+                    this.showMapNotification('Data berhasil dihapus!', 'info');
+                }
+            }
+            
+            showAddDataPointModal() {
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 4000;
+                `;
+                
+                modal.innerHTML = `
+                    <div style="background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 500px;">
+                        <h3 style="color: var(--dark-brown); margin-bottom: 20px;">➕ Tambah Data Point Baru</h3>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--deep-taupe);">Kota</label>
+                            <input type="text" id="modalCity" style="width: 100%; padding: 10px; border: 2px solid var(--blush-pink); border-radius: 8px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--deep-taupe);">Negara</label>
+                            <select id="modalCountry" style="width: 100%; padding: 10px; border: 2px solid var(--blush-pink); border-radius: 8px;">
+                                <option value="Indonesia">Indonesia</option>
+                                <option value="Malaysia">Malaysia</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="Thailand">Thailand</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="Vietnam">Vietnam</option>
+                                <option value="Other">Lainnya</option>
+                            </select>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--deep-taupe);">Jumlah Kasus</label>
+                            <input type="number" id="modalCases" min="1" max="10000" style="width: 100%; padding: 10px; border: 2px solid var(--blush-pink); border-radius: 8px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 5px; color: var(--deep-taupe);">Tingkat Keparahan</label>
+                            <div style="display: flex; gap: 10px;">
+                                <label><input type="radio" name="severity" value="low" checked> Rendah</label>
+                                <label><input type="radio" name="severity" value="medium"> Sedang</label>
+                                <label><input type="radio" name="severity" value="high"> Tinggi</label>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px; margin-top: 20px;">
+                            <button id="modalSubmitBtn" style="flex: 1; padding: 12px; background: var(--gradient-primary); color: white; border: none; border-radius: 8px; font-weight: 600;">Submit</button>
+                            <button id="modalCancelBtn" style="flex: 1; padding: 12px; background: var(--blush-pink); color: var(--dark-brown); border: none; border-radius: 8px; font-weight: 600;">Batal</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                document.getElementById('modalSubmitBtn').addEventListener('click', () => {
+                    const city = document.getElementById('modalCity').value;
+                    const country = document.getElementById('modalCountry').value;
+                    const cases = parseInt(document.getElementById('modalCases').value);
+                    const severity = document.querySelector('input[name="severity"]:checked').value;
+                    
+                    if (!city || !cases) {
+                        alert('Harap isi semua field yang diperlukan!');
+                        return;
+                    }
+                    
+                    // Generate coordinates based on country
+                    const coordinates = this.getCoordinatesByCountry(country, city);
+                    
+                    const newPoint = {
+                        city: city,
+                        country: country,
+                        lat: coordinates.lat,
+                        lng: coordinates.lng,
+                        cases: cases,
+                        severity: severity
+                    };
+                    
+                    this.dataStorage.addDataPoint(newPoint);
+                    this.addDataPointToMap(newPoint);
+                    this.updateCovidSphereStats();
+                    
+                    modal.remove();
+                    this.showMapNotification(`Data point untuk ${city}, ${country} berhasil ditambahkan!`, 'success');
+                });
+                
+                document.getElementById('modalCancelBtn').addEventListener('click', () => {
+                    modal.remove();
+                });
+            }
+            
+            getCoordinatesByCountry(country, city) {
+                // Simplified coordinates for demonstration
+                const countryCoords = {
+                    'Indonesia': { lat: -6.2 + (Math.random() - 0.5), lng: 106.8 + (Math.random() - 0.5) },
+                    'Malaysia': { lat: 3.1 + (Math.random() - 0.5), lng: 101.7 + (Math.random() - 0.5) },
+                    'Singapore': { lat: 1.3 + (Math.random() - 0.5), lng: 103.8 + (Math.random() - 0.5) },
+                    'Thailand': { lat: 13.8 + (Math.random() - 0.5), lng: 100.5 + (Math.random() - 0.5) },
+                    'Philippines': { lat: 14.6 + (Math.random() - 0.5), lng: 121.0 + (Math.random() - 0.5) },
+                    'Vietnam': { lat: 10.8 + (Math.random() - 0.5), lng: 106.6 + (Math.random() - 0.5) },
+                    'Other': { lat: (Math.random() * 180) - 90, lng: (Math.random() * 360) - 180 }
+                };
+                
+                return countryCoords[country] || countryCoords['Other'];
+            }
+            
+            focusSoutheastAsia() {
+                const mapContainer = document.getElementById('mapContainer');
+                const stats = this.dataStorage.getStats();
+                
+                // Highlight Southeast Asia region
+                mapContainer.style.background = 'linear-gradient(135deg, #fff8e1, #ffecb3)';
+                
+                // Show notification with stats
+                this.showMapNotification(
+                    `Asia Tenggara: ${stats.seaPoints} data points, ${stats.seaHospitals} rumah sakit terdeteksi!`, 
+                    'info'
+                );
+                
+                // Update view state
+                this.southeastAsiaView = true;
+            }
+            
+            toggleHospitals() {
+                const mapContainer = document.getElementById('mapContainer');
+                const hospitals = mapContainer.querySelectorAll('.hospital-marker');
+                
+                if (this.hospitalsVisible) {
+                    hospitals.forEach(hospital => {
+                        hospital.style.display = 'none';
+                    });
+                    this.showMapNotification('Rumah Sakit disembunyikan', 'info');
+                } else {
+                    hospitals.forEach(hospital => {
+                        hospital.style.display = 'block';
+                    });
+                    
+                    // Show hospital list
+                    const hospitalList = this.dataStorage.getHospitals()
+                        .map(h => `${h.name} (${h.city}): ${h.beds} tempat tidur`)
+                        .join('\n');
+                    
+                    this.showMapNotification(
+                        `${hospitals.length} rumah sakit ditampilkan. Rumah sakit terdekat akan muncul sebagai marker biru.`,
+                        'success'
+                    );
+                }
+                
+                this.hospitalsVisible = !this.hospitalsVisible;
+            }
+            
+            startLiveDataSimulation() {
+                if (this.liveDataInterval) {
+                    clearInterval(this.liveDataInterval);
+                    this.liveDataInterval = null;
+                    this.showMapNotification('Simulasi data live dihentikan', 'info');
+                    return;
+                }
+                
+                this.liveDataInterval = setInterval(() => {
+                    const newPoint = this.dataStorage.simulateLiveData();
+                    this.addDataPointToMap(newPoint);
+                    this.updateCovidSphereStats();
+                    
+                    // Show notification for new data
+                    this.showMapNotification(
+                        `Live update: ${newPoint.city}, ${newPoint.country} - ${newPoint.cases} kasus baru`,
+                        'live'
+                    );
+                }, 5000); // Every 5 seconds
+                
+                this.showMapNotification('Simulasi data live dimulai! Data baru akan muncul setiap 5 detik.', 'success');
+            }
+            
+            stopLiveDataSimulation() {
+                if (this.liveDataInterval) {
+                    clearInterval(this.liveDataInterval);
+                    this.liveDataInterval = null;
+                }
+            }
+            
+            showMapNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : type === 'live' ? '#2196F3' : '#FF9800'};
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 10px;
+                    box-shadow: var(--shadow-medium);
+                    z-index: 100;
+                    animation: slideInRight 0.5s ease;
+                    max-width: 300px;
+                `;
+                
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : type === 'live' ? 'broadcast-tower' : 'info-circle'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                const mapContainer = document.getElementById('mapContainer');
+                mapContainer.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.5s ease';
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 500);
+                }, 3000);
+            }
+            
+            // ==================== AI CHAT FUNCTIONS ====================
+            initChat() {
+                const chatInput = document.getElementById('chatInput');
+                const sendChatBtn = document.getElementById('sendChatBtn');
+                const chatContainer = document.getElementById('chatContainer');
+                
+                // Send message on button click
+                sendChatBtn.addEventListener('click', () => {
+                    this.sendChatMessage();
+                });
+                
+                // Send message on Enter key
+                chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.sendChatMessage();
+                    }
+                });
+                
+                // Quick question buttons
+                document.querySelectorAll('.quick-question').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const question = e.target.getAttribute('data-question');
+                        this.addMessageToChat(question, false);
+                        this.getAIResponse(question);
+                    });
+                });
+            }
+            
+            sendChatMessage() {
+                const chatInput = document.getElementById('chatInput');
+                const message = chatInput.value.trim();
+                
+                if (message) {
+                    this.addMessageToChat(message, false);
+                    this.getAIResponse(message);
+                    chatInput.value = '';
+                }
+            }
+            
+            addMessageToChat(message, isAI = false) {
+                const chatContainer = document.getElementById('chatContainer');
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-message ${isAI ? 'ai-message' : 'user-message'}`;
+                messageDiv.innerHTML = `<strong>${isAI ? 'Symphony AI:' : 'Anda:'}</strong> ${message}`;
+                
+                chatContainer.appendChild(messageDiv);
+                
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            getAIResponse(userMessage) {
+                // Show typing indicator
+                this.showTypingIndicator();
+                
+                // Simulate AI thinking time
+                setTimeout(() => {
+                    this.removeTypingIndicator();
+                    
+                    const response = this.aiAssistant.getResponse(userMessage);
+                    this.addMessageToChat(response, true);
+                }, 1000 + Math.random() * 1000);
+            }
+            
+            showTypingIndicator() {
+                const chatContainer = document.getElementById('chatContainer');
+                
+                const typingDiv = document.createElement('div');
+                typingDiv.id = 'typingIndicator';
+                typingDiv.className = 'chat-message ai-message';
+                typingDiv.innerHTML = `
+                    <strong>Symphony AI:</strong> 
+                    <span class="typing-dots">
+                        <span class="dot">.</span>
+                        <span class="dot">.</span>
+                        <span class="dot">.</span>
+                    </span>
+                `;
+                
+                // Add CSS for typing animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    .typing-dots .dot {
+                        animation: typing 1.4s infinite;
+                        opacity: 0;
+                    }
+                    .typing-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+                    .typing-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+                    @keyframes typing {
+                        0%, 100% { opacity: 0; }
+                        50% { opacity: 1; }
+                    }
+                `;
+                
+                if (!document.getElementById('typingStyles')) {
+                    style.id = 'typingStyles';
+                    document.head.appendChild(style);
+                }
+                
+                chatContainer.appendChild(typingDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            removeTypingIndicator() {
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+        }
+
+        // ==================== INITIALIZE APP ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add CSS animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Initialize the application
+            window.healthGuardApp = new HealthGuardApp();
+            
+            // Show welcome message after a delay
+            setTimeout(() => {
+                const chatContainer = document.getElementById('chatContainer');
+                if (chatContainer) {
+                    const welcomeMsg = document.createElement('div');
+                    welcomeMsg.className = 'chat-message ai-message';
+                    welcomeMsg.innerHTML = `
+                        <strong>Symphony AI:</strong> Selamat datang di HealthGuard! 🎉 
+                        Saya di sini untuk membantu Anda. Coba tanyakan tentang fitur kami, 
+                        atau klik tombol pertanyaan cepat di bawah untuk mulai.
+                    `;
+                    chatContainer.appendChild(welcomeMsg);
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
